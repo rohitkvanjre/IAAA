@@ -4,15 +4,8 @@
 
 A full-stack AI-based face recognition attendance system that automates and streamlines classroom attendance using real-time video processing and a smart React dashboard. It eliminates manual efforts, supports time-based attendance checks, and generates downloadable attendance reports.
 
-![Banner](https://github.com/rohitkvanjre/IAAA/blob/main/banner.png) <!-- Add a banner if you have one -->
 
----
 
-## 🚀 Live Demo (if hosted)
-
-🧪 *Coming Soon*
-
----
 
 ## 📂 Repository
 
