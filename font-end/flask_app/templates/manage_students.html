@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manage Students</title>
+  <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, white, white);
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        form {
+        margin-bottom: 20px;
+        }
+        .navbar .btn-logout {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            background-color: #dc3545; /* Red background */
+            color: white; /* White text */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            font-size: 16px; /* Slightly larger font size */
+            text-decoration: none; /* Remove underline */
+            font-weight: bold; /* Bold text */
+            cursor: pointer;
+            transition: all 0.3s ease; /* Smooth transition */
+        }
+
+        /* Hover Effect */
+        .navbar .btn-logout:hover {
+            background-color: #c82333; /* Slightly darker red */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+            transform: translateY(-2px); /* Lift the button slightly */
+        }
+        q
+        table {
+        width: 100%;
+        border-collapse: collapse;
+        }
+
+        table, th, td {
+        border: 1px solid white;
+        }
+
+        th, td {
+        padding: 10px;
+        text-align: left;
+        }
+
+        button {
+        background-color: red;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+        }
+  </style>
+</head>
+<body>
+    <h1>Manage Students</h1>
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="btn-logout">Dashboard</a>
+    </nav>
+  <form method="POST" action="/manage_students">
+    <input type="text" name="reg_number" placeholder="Registration Number" required>
+    <input type="text" name="usn" placeholder="USN" required>
+    <input type="text" name="name" placeholder="Name" required>
+    <button type="submit">Add Student</button>
+  </form>
+  <h2>Existing Students</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Registration Number</th>
+        <th>USN</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in students %}
+      <tr>
+        <td>{{ student['id'] }}</td>
+        <td>{{ student['reg_number'] }}</td>
+        <td>{{ student['usn'] }}</td>
+        <td>{{ student['name'] }}</td>
+        <td>
+          <form method="POST" action="/delete_student/{{ student['reg_number'] }}">
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

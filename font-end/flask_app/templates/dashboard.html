@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <-->
+    <style>
+        /* Logout Button */
+        .navbar .btn-logout {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            background-color: #dc3545; /* Red background */
+            color: white; /* White text */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            font-size: 16px; /* Slightly larger font size */
+            text-decoration: none; /* Remove underline */
+            font-weight: bold; /* Bold text */
+            cursor: pointer;
+            transition: all 0.3s ease; /* Smooth transition */
+        }
+
+        /* Hover Effect */
+        .navbar .btn-logout:hover {
+            background-color: #c82333; /* Slightly darker red */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+            transform: translateY(-2px); /* Lift the button slightly */
+        }
+
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, white, white);
+        }
+        h1{
+            text-align: center;
+        }
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dashboard</h1>
+     <!-- Flash messages -->
+     {% with messages = get_flashed_messages(with_categories=True) %}
+     {% if messages %}
+         <div>
+             {% for category, message in messages %}
+                 <p class="alert {{ category }}">{{ message }}</p>
+             {% endfor %}
+         </div>
+     {% endif %}
+ {% endwith %}
+    <nav class="navbar">
+        <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h3>Manage Students</h3>
+            <p>Add or remove student records from the database.</p>
+            <button onclick="window.location.href='/manage_students'">Manage Students</button>
+          </div>          
+        <div class="card">
+            <h3>View Attendance</h3>
+            <p>Access and view attendance records.</p>
+            <button onclick="window.location.href='/view_attendance'">View Attendance</button>
+        </div>
+        <div class="card">
+            <h3>Take Attendance</h3>
+            <p>Start face recognition to mark attendance.</p>
+            <button onclick="window.location.href='/take_attendance'">Take Attendance</button>
+        </div>
+        <div class="card">
+            <h3>Capture</h3>
+            <p>Capture and store student data for recognition.</p>
+            <button onclick="window.location.href='/capture'">Capture</button>
+        </div>
+    </div>
+</body>
+</html>

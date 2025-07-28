@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Attendance</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, white, white);
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar .btn-logout {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            background-color: #dc3545; /* Red background */
+            color: white; /* White text */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            font-size: 16px; /* Slightly larger font size */
+            text-decoration: none; /* Remove underline */
+            font-weight: bold; /* Bold text */
+            cursor: pointer;
+            transition: all 0.3s ease; /* Smooth transition */
+        }
+
+        /* Hover Effect */
+        .navbar .btn-logout:hover {
+            background-color: #c82333; /* Slightly darker red */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+            transform: translateY(-2px); /* Lift the button slightly */
+        }
+        h1,h2 {
+            text-align: center;
+        }
+        /* Center the content */
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Style the label */
+        .center-container label {
+            font-size: 18px; /* Slightly larger font */
+            font-weight: bold;
+            margin-right: 10px; /* Add spacing between label and dropdown */
+            color:black; /* Label color */
+        }
+
+        /* Style the select dropdown */
+        .center-container select {
+            font-size: 16px; /* Slightly larger text */
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            outline: none; /* Remove outline */
+            cursor: pointer;
+            transition: all 0.3s ease; /* Smooth transition */
+        }
+
+        /* Add hover effect */
+        .center-container select:hover {
+            border-color: #007bff; /* Change border color on hover */
+            box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+        }
+        /* Top-right corner button */
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        /* Dashboard button styling */
+        .dashboard-btn {
+            background-color: #007bff; /* Blue background */
+            color: white; /* White text */
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: all 0.3s ease; /* Smooth hover transition */
+        }
+
+        /* Hover effect */
+        .dashboard-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+        }
+
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+            background-color: white;
+            text-align: left;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+
+        table td {
+            color: #333;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <h1>View Attendance</h1>
+    <form method="POST" action="{{ url_for('view_attendance') }}">
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="btn-logout">Dashboard</a>
+    </nav>
+    <div class="center-container">
+        <label for="date">Select Date:</label>
+        <select name="date" id="date" onchange="this.form.submit()">
+            <option value="" disabled selected>Select a date:</option>
+            {% for date in dates %}
+                <option value="{{ date }}" {% if date == selected_date %}selected{% endif %}>{{ date }}</option>
+            {% endfor %}
+        </select>
+        {% if selected_date %}
+        <label for="file">Select File:</label>
+        <select name="file" id="file" onchange="this.form.submit()">
+            <option value="" disabled selected>Select a file</option>
+            {% for file in files %}
+                <option value="{{ file }}" {% if file == selected_file %}selected{% endif %}>{{ file }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+    </div>
+    </form>
+
+    {% if table_html %}
+        <h2>Attendance Data</h2>
+        <div>{{ table_html|safe }}</div>
+        <form method="POST" action="{{ url_for('download') }}">
+            <input type="hidden" name="file_path" value="{{ file_path }}">
+            <center><button type="submit">Download File</button></center>
+        </form>
+    {% endif %}
+</body>
+</html>
